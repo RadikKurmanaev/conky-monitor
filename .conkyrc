@@ -1,0 +1,109 @@
+conky.config = {
+    alignment = 'top_right',
+    background = false,
+    border_width = 1,
+    cpu_avg_samples = 2,
+    default_color = 'A020F0',
+    default_outline_color = 'white',
+    default_shade_color = 'white',
+    double_buffer = true,
+    draw_borders = false,
+    draw_graph_borders = true,
+    draw_outline = false,
+    draw_shades = false,
+    extra_newline = false,
+    font = 'DejaVu Sans Mono:size=10',
+    gap_x = 25,
+    gap_y = 40,
+    minimum_height = 5,
+    minimum_width = 400,
+    maximum_width = 400,
+    net_avg_samples = 2,
+    no_buffers = true,
+    out_to_console = false,
+    out_to_ncurses = false,
+    out_to_stderr = false,
+    out_to_x = true,
+    own_window = true,
+    own_window_class = 'Conky',
+    own_window_type = 'dock',
+    own_window_hints = 'below,undecorated,sticky,skip_taskbar,skip_pager',
+    own_window_argb_visual = true,
+    own_window_transparent = true,   
+    show_graph_range = false,
+    show_graph_scale = false,
+    stippled_borders = 0,
+    update_interval = 5.0,
+    uppercase = false,
+    use_spacer = 'none',
+    use_xft = true,
+    times_in_seconds = true,
+
+    color0 = '8583F1', --Description
+    color1 = '8583F1', --Name PID MEM% CPU%
+    color2 = '844ABE', --Data
+    color3 = 'EF8485', --Title
+
+    font0 = 'DejaVu Sans Mono:size=10',
+    font1 = 'DejaVu Sans Mono:bold:size=10',
+    font2 = 'DejaVu Sans Mono:bold:size=10',
+    font3 = 'DejaVu Sans Mono:bold:italic:size=10',
+}
+
+
+conky.text = [[
+
+${color3}${font2}SYSTEM ${hr 4}${font}
+${color0}OS:    ${color2}${alignr}${execi 86400 lsb_release -d -s}
+${color0}Kernel:    ${color2}${alignr}$kernel $machine
+${color0}Host:    ${color2}${alignr}$nodename
+${color0}Uptime:    ${color2}${alignr}${format_time $uptime "\hh \mm"}
+${color0}Processes:    ${color2}${alignr}$running_processes/$processes
+
+${color3}${font2}CPU ${hr 4}${font}
+${color2}${font1}${execi 86400 grep model /proc/cpuinfo | cut -d : -f2 | tail -1 | sed -En 's/ (.*)w\/.*/\1/p'}${font}${alignr}${color0}CPU Usage:${color2} ${cpu cpu0}%
+${color0}CPU Temp:${color2} ${exec sensors | grep Tctl | awk '{print $2}'}${alignr}${color0}CPU FAN:${color2} ${exec sensors | grep cpu_fan | awk '{print $2}'}RPM
+
+${freq_g 1}GHz ${cpu 1}% ${cpubar cpu1 10,60}${alignr}${freq_g 9}GHz ${cpu 9}% ${cpubar cpu9 10,60}
+${freq_g 2}GHz ${cpu 2}% ${cpubar cpu2 10,60}${alignr}${freq_g 10}GHz ${cpu 10}% ${cpubar cpu10 10,60}
+${freq_g 3}GHz ${cpu 3}% ${cpubar cpu3 10,60}${alignr}${freq_g 11}GHz ${cpu 11}% ${cpubar cpu11 10,60}
+${freq_g 4}GHz ${cpu 4}% ${cpubar cpu4 10,60}${alignr}${freq_g 12}GHz ${cpu 12}% ${cpubar cpu12 10,60}
+${freq_g 5}GHz ${cpu 5}% ${cpubar cpu5 10,60}${alignr}${freq_g 13}GHz ${cpu 13}% ${cpubar cpu13 10,60}
+${freq_g 6}GHz ${cpu 6}% ${cpubar cpu6 10,60}${alignr}${freq_g 14}GHz ${cpu 14}% ${cpubar cpu14 10,60}
+${freq_g 7}GHz ${cpu 7}% ${cpubar cpu7 10,60}${alignr}${freq_g 15}GHz ${cpu 15}% ${cpubar cpu15 10,60}
+${freq_g 8}GHz ${cpu 8}% ${cpubar cpu8 10,60}${alignr}${freq_g 16}GHz ${cpu 16}% ${cpubar cpu16 10,60}
+
+${color1}Name${goto 247}PID${goto 307}CPU%${goto 367}MEM
+${color2}${top name 1}${goto 220}${top pid 1}${goto 290}${top cpu 1}${alignr}${top mem_res 1}
+${color2}${top name 2}${goto 220}${top pid 2}${goto 290}${top cpu 2}${alignr}${top mem_res 2}
+${color2}${top name 3}${goto 220}${top pid 3}${goto 290}${top cpu 3}${alignr}${top mem_res 3}
+${color2}${top name 4}${goto 220}${top pid 4}${goto 290}${top cpu 4}${alignr}${top mem_res 4}
+${color2}${top name 5}${goto 220}${top pid 5}${goto 290}${top cpu 5}${alignr}${top mem_res 5}
+
+${color3}${font2}RAM ${hr 4}${font}
+${color0}RAM:${color2} $mem / $memmax ${alignr}$memperc% ${membar 10,150}
+${color0}Swap:${color2} $swap / $swapmax ${alignr}$swapperc% ${swapbar 10,150}
+
+${color1}Name${goto 247}PID${goto 307}CPU%${goto 367}MEM
+${color2}${top_mem name 1}${goto 220}${top_mem pid 1}${goto 290}${top_mem cpu 1}${alignr}${top_mem mem_res 1}
+${color2}${top_mem name 2}${goto 220}${top_mem pid 2}${goto 290}${top_mem cpu 2}${alignr}${top_mem mem_res 2}
+${color2}${top_mem name 3}${goto 220}${top_mem pid 3}${goto 290}${top_mem cpu 3}${alignr}${top_mem mem_res 3}
+${color2}${top_mem name 4}${goto 220}${top_mem pid 4}${goto 290}${top_mem cpu 4}${alignr}${top_mem mem_res 4}
+${color2}${top_mem name 5}${goto 220}${top_mem pid 5}${goto 290}${top_mem cpu 5}${alignr}${top_mem mem_res 5}
+
+${color3}${font2}STORAGE ${hr 4}${font}
+${color0}root ${color2}${fs_used /} / ${fs_size /}${alignr}${fs_used_perc /}% ${fs_bar 10,150 /}
+${color0}notroot ${color2}${fs_used /mnt/notroot} / ${fs_size /mnt/notroot}${alignr}${fs_used_perc /mnt/notroot}% ${fs_bar 10,150 /}
+${color0}nvme1: ${exec sensors | grep Composite | awk '{print $2}' | head -n 1} ${alignr}${color0}nvme2: ${exec sensors | grep Composite | awk '{print $2}' | tail -n 1}
+
+${color3}${font2}GPU ${hr 4}${font}
+${color1}${exec nvidia-smi --query-gpu=gpu_name --format=csv,noheader}${alignr}${color0}GPU Usage:${color2} ${nvidia gpuutil}%
+${color0}GPU Temp:${color2} +${nvidia temp}°C${alignr}GPU FAN:${color2} ${exec sensors | grep gpu_fan | awk '{print $2}'}RPM
+${color0}RAM: ${color2}${nvidia memused} / ${nvidia memmax}Mb${alignr}${nvidia memutil}% ${nvidiabar 10,150 memutil}
+
+${color3}${font2}NETWORK ${hr 4}${font}
+${color0}WiFi:${color2} ${wireless_essid wlp4s0}${alignr}${wireless_link_qual wlp4s0}% ${wireless_link_bar 10,150 wlp4s0}
+${color0}Local IP:${color2} ${addr wlp4s0}${alignr}Public IP:${color2} ${execi 3600 curl ifconfig.me}
+${color0}Total down:${color2} ${totaldown wlp4s0}${alignr}Total up:${color2} ${totalup wlp4s0}
+
+]] 
